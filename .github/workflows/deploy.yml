@@ -19,7 +19,7 @@ jobs:
         run: |
           aws cloudformation deploy \
             --template-file templates/network-stack-infra.yml \
-            --stack-name ecs-network-stack \
+            --stack-name ecs-net-stack \
             --region us-east-1
       - name: Deploy ECS stack
         run: |
@@ -30,7 +30,7 @@ jobs:
             --capabilities CAPABILITY_NAMED_IAM
              --parameter-overrides \
                 VpcId=$(aws cloudformation describe-stacks --stack-name network-stack-cf --query "Stacks[0].Outputs[?OutputKey=='VpcId'].OutputValue" --output text) \
-                PublicSubnet1Id=$(aws cloudformation describe-stacks --stack-name network-stack-cf --query "Stacks[0].Outputs[?OutputKey=='PublicSubnet1Id'].OutputValue" --output text) \
-                PublicSubnet2Id=$(aws cloudformation describe-stacks --stack-name network-stack-cf --query "Stacks[0].Outputs[?OutputKey=='PublicSubnet2Id'].OutputValue" --output text) \
-                PrivateSubnet1Id=$(aws cloudformation describe-stacks --stack-name network-stack-cf --query "Stacks[0].Outputs[?OutputKey=='PrivateSubnet1Id'].OutputValue" --output text) \
-                PrivateSubnet2Id=$(aws cloudformation describe-stacks --stack-name network-stack-cf --query "Stacks[0].Outputs[?OutputKey=='PrivateSubnet2Id'].OutputValue" --output text)
+                PublicSubnet1Id=$(aws cloudformation describe-stacks --stack-name ecs-net-stack --query "Stacks[0].Outputs[?OutputKey=='PublicSubnet1Id'].OutputValue" --output text) \
+                PublicSubnet2Id=$(aws cloudformation describe-stacks --stack-name ecs-net-stack --query "Stacks[0].Outputs[?OutputKey=='PublicSubnet2Id'].OutputValue" --output text) \
+                PrivateSubnet1Id=$(aws cloudformation describe-stacks --stack-name ecs-net-stack --query "Stacks[0].Outputs[?OutputKey=='PrivateSubnet1Id'].OutputValue" --output text) \
+                PrivateSubnet2Id=$(aws cloudformation describe-stacks --stack-name ecs-net-stack --query "Stacks[0].Outputs[?OutputKey=='PrivateSubnet2Id'].OutputValue" --output text)
